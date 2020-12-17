@@ -23,6 +23,7 @@ namespace TileMapEditor
         private int tileSheetRows;
         private int tileSheetColumns;
 
+
         public Map(int tileWidth, int tileHeight, int scale)
         {
             this.tileWidth = tileWidth;
@@ -30,12 +31,67 @@ namespace TileMapEditor
             this.scale = scale;
         }
 
+
+        private void Paint_Tile(object sender, MouseEventArgs e)
+        {
+            if(e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                Control control = (Control)sender;
+
+                if(control.Capture)
+                {
+                    control.Capture = false;
+                }
+
+                if(control.ClientRectangle.Contains(e.Location))
+                {
+                    PictureBox pictureBox = sender as PictureBox;
+                    Point tilePos = (Point)pictureBox.Tag;
+
+                    map[(tilePos.Y * 30) + tilePos.X, currentLayer] = burshValue;
+                    int row = 0;
+                    int column = 0;
+
+                    try
+                    {
+                        row = map[(tilePos.Y * 30) + tilePos.X, currentLayer] % tileSheetColumns;
+                        column = map[(tilePos.Y * 30) + tilePos.X, currentLayer] / tileSheetRows;
+                        column = 5 - column;
+                    }
+                    catch (DivideByZeroException err)
+                    {
+                    }
+
+                    Size destSize = new Size(tileWidth * scale, tileHeight * scale);
+                    Size srcSize = new Size(tileWidth, tileHeight);
+                    Point destLoc = new Point(0, 0);
+                    Point srcLoc = new Point(tileHeight * row, tileWidth * column);
+                    Rectangle destRect = new Rectangle(destLoc, destSize);
+                    Rectangle srcRect = new Rectangle(srcLoc, srcSize);
+
+                    Bitmap tile = new Bitmap((tileWidth * scale) - 2, (tileHeight * scale) - 2, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                    tile.MakeTransparent();
+                    Graphics G = Graphics.FromImage(tile);
+                    G.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+
+                    try
+                    {
+                        G.DrawImage(sourceBmp, destRect, srcRect, GraphicsUnit.Pixel);
+                    }
+                    catch (ArgumentNullException err)
+                    {
+                    }
+                    tiles[(tilePos.Y * 30) + tilePos.X, currentLayer].Image = tile;
+                }
+            }
+        }
+
         public void LoadBMP(string filePath)
         {
             sourceBmp = new Bitmap(filePath);
         }
 
-        public void SetUpTileMap(TableLayoutPanel tileMap)
+        public void SetUpTileMap()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -54,14 +110,13 @@ namespace TileMapEditor
                         }
                         p.Size = new Size(tileWidth * scale, tileHeight * scale);
                         p.Tag = new Point(x, y);
-                        p.MouseDown += new MouseEventHandler(this.Mouse_Down);
-
+                        p.MouseMove += Paint_Tile;
+                        p.MouseDown += Paint_Tile;
                         tiles[(y * 30) + x, i] = p;
                     }
                 }
             }
         }
-
         public void DrawTileMAp(TableLayoutPanel tileMap)
         {
             for (int x = 0; x < 30; x++)
@@ -79,51 +134,6 @@ namespace TileMapEditor
                 }
             }
         }
-
-        private void Mouse_Down(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            PictureBox pictureBox = sender as PictureBox;
-            Point tilePos = (Point)pictureBox.Tag;
-
-            map[(tilePos.Y * 30) + tilePos.X, currentLayer] = burshValue;
-            int row = 0;
-            int column = 0;
-
-            try
-            {
-                row = map[(tilePos.Y * 30) + tilePos.X, currentLayer] % tileSheetColumns;
-                column = map[(tilePos.Y * 30) + tilePos.X, currentLayer] / tileSheetRows;
-                column = 5 - column;
-            }
-            catch (DivideByZeroException err)
-            {
-
-                MessageBox.Show("Error: /n" + err.Message);
-
-            }
-
-            Size destSize = new Size(tileWidth * scale, tileHeight * scale);
-            Size srcSize = new Size(tileWidth, tileHeight);
-            Point destLoc = new Point(0, 0);
-            Point srcLoc = new Point(tileHeight * row, tileWidth * column);
-            Rectangle destRect = new Rectangle(destLoc, destSize);
-            Rectangle srcRect = new Rectangle(srcLoc, srcSize);
-
-            Bitmap tile = new Bitmap((tileWidth * scale) - 2, (tileHeight * scale) - 2, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            tile.MakeTransparent();
-            Graphics G = Graphics.FromImage(tile);
-            G.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-            try
-            {
-                G.DrawImage(sourceBmp, destRect, srcRect, GraphicsUnit.Pixel);
-            }
-            catch (ArgumentNullException err)
-            {
-                MessageBox.Show("Error: \n" + err.Message);
-            }
-            tiles[(tilePos.Y * 30) + tilePos.X, currentLayer].Image = tile;
-        }
         public void SetBush(int value)
         {
             this.burshValue = value;
@@ -140,6 +150,12 @@ namespace TileMapEditor
             this.tileSheetRows = rows;
         }
 
+        public int[,] GetMap()
+        {
+
+            return this.map;
+        
+        }
     }
 }
 

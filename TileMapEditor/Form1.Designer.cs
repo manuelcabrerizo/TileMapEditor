@@ -38,6 +38,7 @@ namespace TileMapEditor
             this.label2 = new System.Windows.Forms.Label();
             this.columnNumber = new System.Windows.Forms.NumericUpDown();
             this.rowsNumber = new System.Windows.Forms.NumericUpDown();
+            this.export = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.columnNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsNumber)).BeginInit();
             this.SuspendLayout();
@@ -114,12 +115,23 @@ namespace TileMapEditor
             this.rowsNumber.Size = new System.Drawing.Size(120, 20);
             this.rowsNumber.TabIndex = 8;
             // 
+            // export
+            // 
+            this.export.Location = new System.Drawing.Point(1292, 624);
+            this.export.Name = "export";
+            this.export.Size = new System.Drawing.Size(75, 23);
+            this.export.TabIndex = 9;
+            this.export.Text = "Export";
+            this.export.UseVisualStyleBackColor = true;
+            this.export.Click += new System.EventHandler(this.export_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1556, 805);
+            this.Controls.Add(this.export);
             this.Controls.Add(this.rowsNumber);
             this.Controls.Add(this.columnNumber);
             this.Controls.Add(this.label2);
@@ -146,6 +158,7 @@ namespace TileMapEditor
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown columnNumber;
         private System.Windows.Forms.NumericUpDown rowsNumber;
+        private System.Windows.Forms.Button export;
     }
 }
 

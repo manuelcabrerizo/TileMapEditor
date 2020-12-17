@@ -8,3 +8,7 @@ D:\Dev\TileMapEditor\TileMapEditor\obj\Debug\TileMapEditor.csproj.GenerateResour
 D:\Dev\TileMapEditor\TileMapEditor\obj\Debug\TileMapEditor.csproj.CoreCompileInputs.cache
 D:\Dev\TileMapEditor\TileMapEditor\obj\Debug\TileMapEditor.exe
 D:\Dev\TileMapEditor\TileMapEditor\obj\Debug\TileMapEditor.pdb
+D:\Dev\TileMapEditor\TileMapEditor\bin\Debug\TileMapEditor.exe.manifest
+D:\Dev\TileMapEditor\TileMapEditor\bin\Debug\TileMapEditor.application
+D:\Dev\TileMapEditor\TileMapEditor\obj\Debug\TileMapEditor.exe.manifest
+D:\Dev\TileMapEditor\TileMapEditor\obj\Debug\TileMapEditor.application

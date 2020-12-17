@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace TileMapEditor
@@ -12,7 +13,6 @@ namespace TileMapEditor
         {
             InitializeComponent();
             this.KeyDown += keyEventHandler;
-
             tileMap.RowCount = 0;
             tileMap.ColumnCount = 0;
             tileMap.RowStyles.Clear();
@@ -27,10 +27,12 @@ namespace TileMapEditor
             tileSheet.AutoScroll = true;
             tileSheet.BackColor = Color.FromArgb(100, 0, 0, 0);
 
-            
-            map.SetUpTileMap(this.tileMap);
+            map.SetUpTileMap();
             map.DrawTileMAp(this.tileMap);
         }
+
+
+
 
         private void keyEventHandler(object sender, KeyEventArgs e)
         {
@@ -57,6 +59,7 @@ namespace TileMapEditor
                 loadFile.Enabled = true;
                 columnNumber.Enabled = true;
                 rowsNumber.Enabled = true;
+                export.Enabled = true;
             }
         }
 
@@ -74,6 +77,34 @@ namespace TileMapEditor
                 loadFile.Enabled = false;
                 columnNumber.Enabled = false;
                 rowsNumber.Enabled = false;
+                export.Enabled = false;
+            }
+        }
+
+        private void export_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                string file = folderBrowserDialog.SelectedPath;
+                int[,] mapFinal = map.GetMap();
+                StreamWriter sw = new StreamWriter(file + @"\mapa.map");
+                sw.WriteLine("Author: 'Manuto Uzumaki'");
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int y = 0; y < 20; y++)
+                    {
+                        sw.Write("{0}: ", i + 1);
+                        for (int x = 0; x < 30; x++)
+                        {
+                            sw.Write("{0} ", mapFinal[(y * 30) + x, i]);
+                        }
+                        sw.WriteLine();
+                    }
+                    sw.WriteLine();
+                }
+                sw.Close();
             }
         }
     }

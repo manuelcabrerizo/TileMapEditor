@@ -1,0 +1,10 @@
+D:\Dev\TileMapEditor\TileMapEditor\bin\Release\TileMapEditor.exe.config
+D:\Dev\TileMapEditor\TileMapEditor\bin\Release\TileMapEditor.exe
+D:\Dev\TileMapEditor\TileMapEditor\bin\Release\TileMapEditor.pdb
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.csprojAssemblyReference.cache
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.Form1.resources
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.Properties.Resources.resources
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.csproj.GenerateResource.cache
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.csproj.CoreCompileInputs.cache
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.exe
+D:\Dev\TileMapEditor\TileMapEditor\obj\Release\TileMapEditor.pdb
